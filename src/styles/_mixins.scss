@@ -1,0 +1,46 @@
+@use './colors' as *;
+$breakpoints: (
+small: 375px,
+medium: 389px,
+large: 424px
+);
+@mixin mq($key) {
+  $size: map-get($breakpoints, $key);
+  @media screen and (max-width: $size){
+    @content
+  }
+}
+
+@mixin mqE($key, $Key2) {
+  $size: map-get($breakpoints, $key);
+  $size2: map-get($breakpoints, $key2);
+  @media screen and (min-width: $size) and (max-width: $size2){
+    @content
+  }
+}
+@mixin mixgroupao() {  
+    display: flex;  
+    justify-content: space-between;
+}
+@mixin mixgroup() {  
+    padding: 0.7%;
+    display: flex;
+    background-color:$colorGroup;;
+    width: 40%;
+    color: $darkGrey;
+    margin-top: 0.4%;
+    font-size: 15px;
+    margin-left: 7%;
+    input{
+        border: none;
+        border-bottom: solid 1px $mediumGrey;
+        background: transparent;
+        width: 52%;
+        margin-left:1.4%;
+    } 
+}
+
+@mixin mxCostumer() {
+  background-color: $colorGroup;
+  padding: 0.7%;
+}
