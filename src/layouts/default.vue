@@ -5,7 +5,6 @@ import {useRouter} from "vue-router";
 import {useDisplay} from 'vuetify'
 import App from "../App.vue";
 
-
 const display = useDisplay();
 const router = useRouter();
 const isMobile = computed(() => display.smAndDown.value)
@@ -23,8 +22,9 @@ function toggleMobileMenu() {
         <router-link to="/" class="logo-link">
           <img
               :src="logo"
-              alt="Ferrari Logo"
+              alt="Onix Logo"
               class="ferrari-logo"
+              style="max-width: 56%; height: auto"
           />
         </router-link>
         <ul class="nav-links" :class="{ 'is-open': isMobileMenuOpen }">
@@ -40,7 +40,6 @@ function toggleMobileMenu() {
           <li @click="toggleMobileMenu">
             <router-link to="/contact">CONTATO</router-link>
           </li>
-
 <!--          <li v-if="logged || logged2" :key="count" @click="toggleMobileMenu">-->
 <!--            <router-link to="/admin">ADMIN</router-link>-->
 <!--          </li>-->
