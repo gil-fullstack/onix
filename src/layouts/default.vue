@@ -79,7 +79,7 @@ function toggleMobileMenu() {
 </template>
 
 <style lang="scss" scoped>
-$ferrari-red: #e70a19;
+$ferrari-red: #ff1010;
 $ferrari-yellow: #ffe600;
 $dark: #5a5a5a;
 $white: #fff;
