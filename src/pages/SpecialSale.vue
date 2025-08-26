@@ -78,8 +78,8 @@ const parts = [
   <h2 class="text-center">Peças com preços especiais na semana</h2>
   <hr />
   Abaixo as peças com desconto da semana:
+  <main class="part-grid">
   <div v-for="(part, k) in parts" :key="part.id" class="part-card">
-    <!--        <img :src="carImageBaseUrl + '/'+ part.id +'/main_' + part.id +'.jpg'" :alt="part.name" class="part-image" />-->
     <v-card
         class="mx-auto"
         max-width="344"
@@ -99,28 +99,10 @@ const parts = [
       </v-card-subtitle>
       <p class="part-year mt-2 ml-4">Year: {{ part.year }}</p>
       <p class="part-price mt-2 ml-4 mb-n3">Price: <span>{{ part.price }}</span></p>
-<!--      <v-card-actions>-->
-<!--        <v-btn-->
-<!--            color="orange-lighten-2"-->
-<!--            text="Explore"-->
-<!--        ></v-btn>-->
-<!--        <v-spacer></v-spacer>-->
-<!--        <v-btn-->
-<!--            :icon="expandedId === part.id  ? 'mdi-chevron-up' : 'mdi-chevron-down'"-->
-<!--            @click="toggleCard(part.id, k)"-->
-<!--        ></v-btn>-->
-<!--      </v-card-actions>-->
-<!--      <v-expand-transition v-if="k === timeId" >-->
-<!--        <div v-show="expandedId === part.id">-->
-<!--          <v-divider></v-divider>-->
-<!--          <v-card-text>-->
-<!--            This part has been fully inspected, all the paperwork is up to date, and it’s ready to be financed.-->
-<!--          </v-card-text>-->
-<!--          <v-btn class="font-weight-bold mb-5 ml-4" color="primary" @click="goToCarDetails(part.id)">See more</v-btn>-->
-<!--        </div>-->
-<!--      </v-expand-transition>-->
+
     </v-card>
   </div>
+  </main>
 </div>
 </template>
 
@@ -133,6 +115,7 @@ const parts = [
   align-items: center;
   padding: 4% 7%;
   .part-grid {
+    background-color: yellow;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
@@ -140,16 +123,16 @@ const parts = [
     //max-width: 1200px;
     max-width: 88%;
     margin: 0 auto;
+    .part-card {
+      background-color: greenyellow;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      overflow-x: auto;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
   }
-  .part-card {
-    background-color: transparent;
-    //border-radius: 8px;
-    //box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    //overflow: hidden;
-    overflow-x: auto;
-    overflow-y: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
+
 
   .part-card:hover {
     transform: translateY(-5px);
