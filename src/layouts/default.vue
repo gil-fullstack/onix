@@ -4,6 +4,7 @@ import logo from '@/assets/logo.png'
 import {useRouter} from "vue-router";
 import {useDisplay} from 'vuetify'
 import App from "../App.vue";
+import My_footer from "../components/my_footer.vue";
 
 const display = useDisplay();
 const router = useRouter();
@@ -17,13 +18,13 @@ function toggleMobileMenu() {
 
 <template>
 
-    <nav class="ferrari-menu">
+    <nav class="my-menu">
       <div class="menu-container">
         <router-link to="/" class="logo-link">
           <img
               :src="logo"
               alt="Onix Logo"
-              class="ferrari-logo"
+              class="my-logo"
               style="max-width: 56%; height: auto"
           />
         </router-link>
@@ -32,10 +33,10 @@ function toggleMobileMenu() {
             <router-link to="/">HOME</router-link>
           </li>
           <li @click="toggleMobileMenu">
-            <router-link to="/">Sobre Nós</router-link>
+            <router-link to="/about">Sobre Nós</router-link>
           </li>
           <li @click="toggleMobileMenu">
-            <router-link to="/">Blog</router-link>
+            <router-link to="/SpecialSale">Promoções</router-link>
           </li>
           <li @click="toggleMobileMenu">
             <router-link to="/contact">CONTATO</router-link>
@@ -74,9 +75,7 @@ function toggleMobileMenu() {
       </div>
     </nav>
     <router-view/>
-  <footer class="store-footer">
-    <p>&copy; 2025 JJ Auto Store. All rights reserved.</p>
-  </footer>
+   <my_footer></my_footer>
 </template>
 
 <style lang="scss" scoped>
@@ -88,7 +87,7 @@ body {
   background-color: $white;
 }
 
-.ferrari-menu {
+.my-menu {
   width: 100%;
   background: $dark;
   box-shadow: 0 2px 18px -8px rgba(0, 0, 0, 0.14);
@@ -116,7 +115,7 @@ body {
     display: flex;
     align-items: center;
 
-    .ferrari-logo {
+    .my-logo {
       height: 48px;
       width: auto;
       margin-top: 2px;
@@ -192,7 +191,7 @@ body {
 // --- Responsive Styles ---
 
 @media (max-width: 960px) {
-  .ferrari-menu {
+  .my-menu {
     .nav-links {
       display: none; // Hide navigation links
     }
@@ -233,10 +232,10 @@ body {
 }
 
 @media (max-width: 480px) {
-  .ferrari-menu .menu-container {
+  .my-menu .menu-container {
     padding: 0 16px;
   }
-  .logo-link .ferrari-logo {
+  .logo-link .my-logo {
     height: 40px;
   }
 }

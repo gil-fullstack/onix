@@ -1,10 +1,15 @@
 <script setup>
+import { useDisplay } from 'vuetify'
+import {computed} from "vue";
+const display = useDisplay()
+const isMobile = computed(() => display.smAndDown.value)
 </script>
 
 <template>
   <div class="my_main">
     <div class="banner">
-      <img src="../assets/banner2_site_1.jpg" width="100%" alt="banner ONIX">
+      <img v-if="!isMobile" src="../assets/banner2_site_1.jpg" width="100%" alt="banner ONIX">
+      <img v-else src="../assets/page.jpg" width="100%" alt="banner ONIX">
     </div>
     <div class="my_text">
       <h2 class="text-center">SUSPENSÃO - FREIO - FILTROS</h2>
