@@ -17,6 +17,32 @@ const isMobile = computed(() => display.smAndDown.value)
       <p class="mt-2">A <strong>Onix Automotive</strong>  ainda ajuda você a controlar o estoque, tem pessoal treinado para te orientar
       com visitas presenciais com apoio técnico e aplicação dos produtos</p>
     </div>
+    <div class="parts">
+      <v-card>
+        <v-img
+            max-height="240px"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_ppQSGokkeOJiUzprrHjYaKjCRY-v6h0_2NCsqWFQZV2cZbv9WY521K4&s"
+            cover
+        ></v-img>
+        <v-card-title>Suspensão</v-card-title>
+      </v-card>
+      <v-card>
+        <v-img
+            max-height="240px"
+            src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRL_MI48-1bbeDqLnbuN8i5MhFxUObd9ZkuOfyfFfb09_dWjuDLdaQd1nVzegVP8MjO_Ru8tn2vCNDKVGoWITmnow1LSg3uV2rtnmcB4S9HCu0x9ul6cdI3BQ"
+            cover
+        ></v-img>
+        <v-card-title>Freios</v-card-title>
+      </v-card>
+      <v-card>
+        <v-img
+            max-height="240px"
+            src="https://images.tcdn.com.br/img/img_prod/1027273/filtro_de_ar_do_motor_gm_chevrolet_cobalt_onix_prisma_spin_joy_joy_plus_tecfil_arl8830_177_1_52fda62772843665a5d57d408fea9648.jpg"
+            cover
+        ></v-img>
+        <v-card-title>Filtros</v-card-title>
+      </v-card>
+    </div>
     <div class="highlight">
       <img src="../assets/bigger_logo.png" width="50%" class="logo" alt="Vite logo" />
     </div>
@@ -40,6 +66,14 @@ const isMobile = computed(() => display.smAndDown.value)
     background-color: white;
     font-size: 1.2em;
     padding: 4%;
+  }
+  .parts{
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 100%;
+    min-width: 100%;
   }
   .highlight{
     padding: 1.4% 2.8%;
