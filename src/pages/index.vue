@@ -98,6 +98,12 @@ const isMobile = computed(() => display.smAndDown.value)
         font-size: 0.88em;
       }
     }
+    .parts{
+      margin-top: 1%;
+      padding:5% 2%;
+      max-width: 100%;
+      min-width: 100%;
+    }
     .highlight{
       padding: 3% 2.8%;
       max-width: 100%;

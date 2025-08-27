@@ -1,7 +1,5 @@
 <script setup>
-
 </script>
-
 <template>
   <footer class="store-footer">
     <div class="social">
@@ -10,10 +8,9 @@
         <img src="../assets/social/insta.png" width="35" alt="instagram logo">
       </a>
     </div>
-    <p>&copy; 2025 JJ Auto Store. All rights reserved.</p>
+    <p>2025 Ônix Automotive Ltda. All rights reserved.</p>
   </footer>
 </template>
-
 <style scoped lang="scss">
 .store-footer{
   .social{
