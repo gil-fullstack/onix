@@ -29,7 +29,8 @@ const props = defineProps({
 </template>
 
 
-<style scoped>
+<style lang="scss" scoped>
+@use '../styles/colors' as *;
 .overlay{
  position: fixed;
   top: 0;
@@ -46,7 +47,7 @@ const props = defineProps({
   min-width: 100%;
  }
  .title{
-   background-color: #0C325E;
+   background-color: $primaryColor;
    min-width: 100%;
    padding-left: 1.4%;
    padding-right: 1.4%;

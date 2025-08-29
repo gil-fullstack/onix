@@ -32,62 +32,125 @@ const headers = [
 const getParts = async () => {
   const response = await fetch('http://localhost:8082/parts/all')
   parts.value = await response.json()
-  console.log(parts.value, 'parts')
 }
 const edit = (item) => {
+  isEditing.value = true
   console.log(item, 'item')
+  modalAddPart.value = true
+  part.value = {
+    "id": item.id,
+    "name": item.name,
+    "category": item.category,
+    "brand": item.brand,
+    "brand_code": item.brand_code,
+    "auto_parts_code": item.auto_parts_code,
+    "cars_models": item.cars_models,
+    "years": item.years,
+    "price": item.price,
+  }
+}
+const closeModal = () => {
+  modalAddPart.value = false
+  isEditing.value = false
+  part.value = {
+    "id": null,
+    "name": null,
+    "category": null,
+    "brand": null,
+    "brand_code": null,
+    "auto_parts_code": null,
+    "cars_models": null,
+  }
+}
+const closeMessageModal = () => {
+  dialogMessage.value = false
+  message.value = ""
+  router.go()
 }
 const remove = async (id) => {
   console.log(id, 'id')
-  const response = await fetch(`http://localhost:8082/parts/delete/${id}`, {
+  const response = await fetch(`http://localhost:8082/parts/${id}`, {
     method: 'DELETE'
   })
+  console.log(response)
   if (response.ok) {
     await getParts()
   }
+  await router.go()
 }
 const prepareOpenAddPart = () => {
   console.log("prepareOpenAddPart")
   modalAddPart.value = true
   isEditing.value = false
 }
-  const modalAddPart = shallowRef(false)
-  const dialogMessage = shallowRef(false)
-  const message = shallowRef("")
-  const isEditing = shallowRef(false)
+const modalAddPart = shallowRef(false)
+const dialogMessage = shallowRef(false)
+const message = shallowRef("")
+const isEditing = shallowRef(false)
 
-  const addPart = async () => {
-    console.log(part.value, 'part.value')
-    const myPart = {
-      "id": null,
-      "name": part.value.name,
-      "category": part.value.category,
-      "brand": part.value.brand,
-      "brand_code": part.value.brand_code,
-      "auto_parts_code": part.value.auto_parts_code,
-      "cars_models": part.value.cars_models,
-      "years": part.value.years,
-      "price": part.value.price,
-      "photoPaths": part.value.photoPaths
-    }
-    const response = await fetch('http://localhost:8082/parts/save', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(myPart)
-    })
-    if (response.ok) {
-      await getParts()
-      await router.push('/admin')
-    }
+const addPart = async () => {
+  console.log(part.value, 'part.value')
+  const myPart = {
+    "id": null,
+    "name": part.value.name,
+    "category": part.value.category,
+    "brand": part.value.brand,
+    "brand_code": part.value.brand_code,
+    "auto_parts_code": part.value.auto_parts_code,
+    "cars_models": part.value.cars_models,
+    "years": part.value.years,
+    "price": part.value.price,
+    "photoPaths": part.value.photoPaths
   }
-  const openUpload = (item) => {
-    console.log(item, 'item')
-  }
-  onMounted(() => {
-    getParts()
+  const response = await fetch('http://localhost:8082/parts/save', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(myPart)
   })
+  console.log(response)
+  if (response.ok) {
+    console.log(response, " into if")
+    modalAddPart.value = false
+    // await router.go()
+    message.value = "Sua peça foi cadastrada com sucesso!"
+    dialogMessage.value = true
+  }
+}
+/* ────────────────────────────────────────────────
+   Photo-upload modal state
+──────────────────────────────────────────────────*/
+const uploadDialog = shallowRef(false)  // open / close modal
+const uploadFile = ref(null)
+const uploading = ref(false)         // request in-flight
+const multiple = ref(false)         // request in-flight
+const uploadProgress = ref(0)
+const uploadPartId = ref(0)// 0-100
+const openUpload = (item) => {
+  console.log(item, 'item')
+  uploadPartId.value = item.id
+  uploadFile.value = null
+  uploadProgress.value = 0
+  uploading.value = false
+  uploadDialog.value = true
+}
+/* POST /photos/upload/{id} – single photo */
+async function uploadOnePhoto(){
+  const formData = new FormData()
+  formData.append('file', uploadFile.value)
+  const response = await fetch(`http://localhost:8082/photos/upload/${uploadPartId.value}`, {
+    method: 'POST',
+    body: formData
+  })
+  if (response.ok) {
+    await getParts()
+    uploadDialog.value = false
+  }
+}
+onMounted(() => {
+  getParts()
+})
 
 </script>
 
@@ -199,7 +262,7 @@ const prepareOpenAddPart = () => {
 
         </v-card-text>
         <div style="display: flex; justify-content: space-around; padding: 4%" class=" mt-n8">
-          <v-btn text="Cancel" @click="modalAddPart = false"></v-btn>
+          <v-btn text="Cancel" @click="closeModal"></v-btn>
           <v-btn color="primary" @click="addPart">GRAVAR</v-btn>
         </div>
       </v-card>
@@ -207,19 +270,53 @@ const prepareOpenAddPart = () => {
     <my-modal
         v-if="dialogMessage"
         title="Nova Peça"
-        size="mySize1"
-        btn="GRAVAR"
-        cancel-btn="CANCELAR"
+        size="mySize3"
+        btn="OK"
+        style="z-index: 101"
+        @close-modal="dialogMessage = false"
+        @btn-modal="closeMessageModal"
     >
-      <v-card>
-        <v-card-title>Peça</v-card-title>
-        <v-card-text>
-          <v-text-field label="Nome da Peça"></v-text-field>
-          <v-text-field label="Código Onix"></v-text-field>
-          <v-text-field label="partros"></v-text-field>
+      <v-card width="90%">
+        <v-card-title>Onix Automotive</v-card-title>
+        <v-card-text class="mt-2 mb-7">
+          <h3>{{ message }}</h3>
         </v-card-text>
       </v-card>
     </my-modal>
+    <MyModal
+        v-if="uploadDialog"
+        size="mySize5"
+        title="Suba a imagem correspondente a sua peça"
+        btn="UPLOAD"
+        cancelBtn="CANCEL"
+        style="z-index: 100"
+        @close-modal="uploadDialog = false"
+        @btn-modal="uploadOnePhoto()"
+        @cancel-modal="uploadDialog = false"
+    >
+      <div class="myUpload" style="width: 100%; padding: 2.8%">
+        <v-file-input
+            v-model="uploadFile"
+            accept="image/*"
+            multiple
+            chips
+            counter
+            label="Select a photo"
+            prepend-icon="mdi-camera"
+            :disabled="uploading"
+        />
+
+        <v-progress-linear
+            v-if="uploading"
+            :model-value="uploadProgress"
+            height="6"
+            color="primary"
+            class="mt-4"
+            striped
+            indeterminate="uploadProgress === 0"
+        />
+      </div>
+    </MyModal>
   </div>
 </template>
 
