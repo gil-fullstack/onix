@@ -1,7 +1,8 @@
 <script setup>
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted, ref, shallowRef} from "vue";
 import {useDisplay} from 'vuetify'
 import {useRouter} from "vue-router";
+import MyModal from "../../components/MyModal.vue";
 
 const display = useDisplay()
 const router = useRouter()
@@ -25,43 +26,205 @@ const headers = [
   {title: 'Código', key: 'auto_parts_code', align: 'center'},
   {title: 'Carros', key: 'cars_models', align: 'center'},
   {title: 'Anos', key: 'years', align: 'center'},
+  {title: '', key: 'actions', align: 'center'},
+  {title: 'Fotos', key: 'uploads', align: 'center'},
 ]
 const getParts = async () => {
   const response = await fetch('http://localhost:8082/parts/all')
   parts.value = await response.json()
   console.log(parts.value, 'parts')
 }
+const edit = (item) => {
+  console.log(item, 'item')
+}
+const remove = async (id) => {
+  console.log(id, 'id')
+  const response = await fetch(`http://localhost:8082/parts/delete/${id}`, {
+    method: 'DELETE'
+  })
+  if (response.ok) {
+    await getParts()
+  }
+}
+const prepareOpenAddPart = () => {
+  console.log("prepareOpenAddPart")
+  modalAddPart.value = true
+  isEditing.value = false
+}
+  const modalAddPart = shallowRef(false)
+  const dialogMessage = shallowRef(false)
+  const message = shallowRef("")
+  const isEditing = shallowRef(false)
 
-onMounted( () => {
-  getParts()
-})
+  const addPart = async () => {
+    console.log(part.value, 'part.value')
+    const myPart = {
+      "id": null,
+      "name": part.value.name,
+      "category": part.value.category,
+      "brand": part.value.brand,
+      "brand_code": part.value.brand_code,
+      "auto_parts_code": part.value.auto_parts_code,
+      "cars_models": part.value.cars_models,
+      "years": part.value.years,
+      "price": part.value.price,
+      "photoPaths": part.value.photoPaths
+    }
+    const response = await fetch('http://localhost:8082/parts/save', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(myPart)
+    })
+    if (response.ok) {
+      await getParts()
+      await router.push('/admin')
+    }
+  }
+  const openUpload = (item) => {
+    console.log(item, 'item')
+  }
+  onMounted(() => {
+    getParts()
+  })
+
 </script>
 
 <template>
-<div class="admin_main">
-  <v-card width="98%" class="pt-1 pl-2 pr-2 text-center">
-    <v-data-table
-        :headers="headers"
-        :hide-default-footer="parts.length < 11"
-        :items="parts"
+  <div class="admin_main">
+    <v-card width="98%" class="pt-1 pl-2 pr-2 text-center">
+      <v-data-table
+          :headers="headers"
+          :hide-default-footer="parts.length < 11"
+          :items="parts"
+      >
+        <template v-slot:top>
+          <v-toolbar>
+            <v-toolbar-title>Peças Onix Automotive</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn
+                class="primary"
+                variant="flat"
+                color="primary"
+                @click="prepareOpenAddPart"
+            >
+              <v-icon icon="mdi-plus"></v-icon>
+              Nova Peça
+            </v-btn>
+          </v-toolbar>
+        </template>
+        <template v-slot:item.actions="{ item }">
+          <div class="d-flex ga-2 justify-end">
+            <v-icon icon="mdi-pencil" color="primary" @click="edit(item)"></v-icon>
+            <v-icon icon="mdi-delete" color="error" small @click="remove(item.id)"/>
+          </div>
+        </template>
+        <template v-slot:item.uploads="{ item }">
+          <div class="d-flex ga-2 justify-end">
+            <v-btn color="secondary" class="font-weight-bold" size="x-small" @click="openUpload(item)">
+              SUBIR IMAGEM
+            </v-btn>
+          </div>
+        </template>
+      </v-data-table>
+    </v-card>
+    <v-dialog v-model="modalAddPart" max-width="500">
+      <v-card
+          :subtitle="`${isEditing ? 'Update' : 'Create'} your part`"
+          :title="`${isEditing ? 'Edit' : 'Add'} a part`"
+      >
+        <v-card-text>
+          <v-text-field
+              v-model="part.name"
+              label="Nome da Peça"
+              class="mt-n3"
+              dense
+              required
+              :rules="[v => !!v || 'Name is required']"
+              prepend-inner-icon="mdi-car-cog"
+          />
+          <v-text-field
+              v-model="part.brand"
+              label="Marca"
+              class="mt-n3"
+              dense
+              required
+              :rules="[v => !!v || 'Brand is required']"
+              prepend-inner-icon="mdi-factory"
+          />
+          <!--                <v-text-field-->
+          <!--                    v-model="part.model"-->
+          <!--                    label="Model"-->
+          <!--                    class="mt-n3"-->
+          <!--                    dense-->
+          <!--                    required-->
+          <!--                    :rules="[v => !!v || 'Model is required']"-->
+          <!--                    prepend-inner-icon="mdi-part-info"-->
+          <!--                />-->
+          <v-text-field
+              v-model="part.auto_parts_code"
+              label="Código Onix"
+              class="mt-n3"
+              dense
+              required
+              :rules="[v => !!v || 'Codigo is required']"
+              prepend-inner-icon="mdi-palette"
+          />
+          <v-text-field
+              v-model="part.cars_models"
+              label="Carros"
+              class="mt-n3"
+              dense
+              required
+              :rules="[v => !!v || 'Carros is required']"
+              prepend-inner-icon="mdi-car"
+          />
+          <v-text-field
+              v-model="part.years"
+              label="Anos Compatíveis"
+              class="mt-n3"
+              dense
+              prepend-inner-icon="mdi-calendar"
+          />
+          <v-text-field
+              v-model="part.price"
+              label="Preço"
+              class="mt-n3"
+              dense
+              required
+              :rules="[v => !!v || 'Price is required']"
+              prepend-inner-icon="mdi-cash"
+          />
+
+        </v-card-text>
+        <div style="display: flex; justify-content: space-around; padding: 4%" class=" mt-n8">
+          <v-btn text="Cancel" @click="modalAddPart = false"></v-btn>
+          <v-btn color="primary" @click="addPart">GRAVAR</v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
+    <my-modal
+        v-if="dialogMessage"
+        title="Nova Peça"
+        size="mySize1"
+        btn="GRAVAR"
+        cancel-btn="CANCELAR"
     >
-      <template v-slot:top>
-        <v-toolbar>
-          <v-toolbar-title>Peças Onix Automotive</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn class="primary" variant="flat" color="primary">
-            <v-icon icon="mdi-plus"></v-icon>
-            Nova Peça
-          </v-btn>
-        </v-toolbar>
-      </template>
-    </v-data-table>
-  </v-card>
-</div>
+      <v-card>
+        <v-card-title>Peça</v-card-title>
+        <v-card-text>
+          <v-text-field label="Nome da Peça"></v-text-field>
+          <v-text-field label="Código Onix"></v-text-field>
+          <v-text-field label="partros"></v-text-field>
+        </v-card-text>
+      </v-card>
+    </my-modal>
+  </div>
 </template>
 
 <style scoped lang="scss">
-.admin_main{
+.admin_main {
   display: flex;
   flex-direction: column;
   align-items: center;
