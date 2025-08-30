@@ -127,9 +127,11 @@ const uploading = ref(false)         // request in-flight
 const multiple = ref(false)         // request in-flight
 const uploadProgress = ref(0)
 const uploadPartId = ref(0)// 0-100
+const uploadPartName = ref("")// 0-100
 const openUpload = (item) => {
   console.log(item, 'item')
   uploadPartId.value = item.id
+  uploadPartName.value = item.name
   uploadFile.value = null
   uploadProgress.value = 0
   uploading.value = false
@@ -138,8 +140,13 @@ const openUpload = (item) => {
 /* POST /photos/upload/{id} – single photo */
 async function uploadOnePhoto(){
   const formData = new FormData()
-  formData.append('file', uploadFile.value)
-  const response = await fetch(`http://localhost:8082/photos/upload/${uploadPartId.value}`, {
+  console.log(uploadPartId.value, 'uploadPartId.value')
+  formData.append(
+      'partId',
+      uploadPartId.value
+  )
+  formData.append('file', uploadFile.value[0])
+  const response = await fetch(`http://localhost:8082/photos/upload/name/` + uploadPartName.value, {
     method: 'POST',
     body: formData
   })
