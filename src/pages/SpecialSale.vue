@@ -1,80 +1,34 @@
 <script setup>
 import { useDisplay } from 'vuetify'
-import {computed} from "vue";
+import {computed, ref, onMounted} from "vue";
 const display = useDisplay()
 const isMobile = computed(() => display.smAndDown.value)
-const parts = [
-  {
-    "id": 1,
-    "name": "Pastilha de Freio",
-    "category": "Freios",
-    "brand": "Monroe",
-    "year": "2023",
-    "price": "R$ 320.00",
-    "mileage": "N/A",
-    "photoPaths": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_ppQSGokkeOJiUzprrHjYaKjCRY-v6h0_2NCsqWFQZV2cZbv9WY521K4&s"
-  },
-  {
-    "id": 2,
-    "name": "Amortecedor",
-    "category": "Suspensão",
-    "brand": "KYB",
-    "year": "2023",
-    "price": "R$ 290.00",
-    "mileage": "N/A",
-    "photoPaths": "https://lojachevroletnova.vtexassets.com/arquivos/ids/13361853-300-300?v=638862888352900000&width=300&height=300&aspect=true"
-  },
-  {
-    "id": 3,
-    "name": "Brake Disc",
-    "category": "Brakes",
-    "brand": "Bosch",
-    "year": "2024",
-    "price": "R$ 450.00",
-    "mileage": "N/A",
-    "photoPaths": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRL_MI48-1bbeDqLnbuN8i5MhFxUObd9ZkuOfyfFfb09_dWjuDLdaQd1nVzegVP8MjO_Ru8tn2vCNDKVGoWITmnow1LSg3uV2rtnmcB4S9HCu0x9ul6cdI3BQ"
-  },
-  {
-    "id": 4,
-    "name": "Brake Pad Set",
-    "category": "Brakes",
-    "brand": "TRW",
-    "year": "2024",
-    "price": "R$ 220.00",
-    "mileage": "N/A",
-    "photoPaths": "https://images.tcdn.com.br/img/img_prod/1027273/filtro_de_ar_do_motor_gm_chevrolet_cobalt_onix_prisma_spin_joy_joy_plus_tecfil_arl8830_177_1_52fda62772843665a5d57d408fea9648.jpg"
-  },
-  {
-    "id": 5,
-    "name": "Oil Filter",
-    "category": "Filters",
-    "brand": "Fram",
-    "year": "2024",
-    "price": "R$ 60.00",
-    "mileage": "Replace every 10,000 km",
-    "photoPaths": "https://images.tcdn.com.br/img/img_prod/1027273/filtro_de_ar_do_motor_gm_chevrolet_cobalt_onix_prisma_spin_joy_joy_plus_tecfil_arl8830_177_1_52fda62772843665a5d57d408fea9648.jpg"
-  },
-  {
-    "id": 6,
-    "name": "Filtro de Ar",
-    "category": "Filters",
-    "brand": "Mann",
-    "year": "2024",
-    "price": "R$ 80.00",
-    "mileage": "Replace every 15,000 km",
-    "photoPaths": "https://images.tcdn.com.br/img/img_prod/1027273/filtro_de_ar_do_motor_gm_chevrolet_cobalt_onix_prisma_spin_joy_joy_plus_tecfil_arl8830_177_1_52fda62772843665a5d57d408fea9648.jpg"
-  },
-  {
-    "id": 7,
-    "name": "Fluído",
-    "category": "Filters",
-    "brand": "Mahle",
-    "year": "2024",
-    "price": "R$ 100.00",
-    "mileage": "Replace every 20,000 km",
-    "photoPaths": "https://images.tcdn.com.br/img/img_prod/1027273/filtro_de_ar_do_motor_gm_chevrolet_cobalt_onix_prisma_spin_joy_joy_plus_tecfil_arl8830_177_1_52fda62772843665a5d57d408fea9648.jpg"
-  }
-]
+
+const carImageBaseUrl = "http://localhost:8082/photos/onix/"
+function resolveSrc(path) {
+  // already a full URL → use as-is
+  if (path.startsWith('http')) return path
+  // only a file name or relative path → prepend base URL
+  return carImageBaseUrl + path
+}
+const parts = ref([])
+
+const getParts = () => {
+  fetch('http://localhost:8082/parts/all')
+  .then(response => response.json())
+  .then(data => {
+
+    parts.value.push(...data)
+    // parts.forEach(part => {
+    //   part.photoPaths = carImageBaseUrl + part.photoPaths
+    // })
+    console.log(parts)
+  })
+  .catch(error => console.log(error))
+}
+onMounted(() => {
+  getParts()
+})
 </script>
 
 <template>
@@ -86,23 +40,26 @@ const parts = [
   <div v-for="(part, k) in parts" :key="part.id" class="part-card">
     <v-card
         class="mx-auto"
-        :max-width="isMobile ? '95%' : '99%'"
-        min-height="370px"
+        max-width="344"
     >
       <v-img
-          max-height="240px"
-          :src="part.photoPaths"
+          v-if="part.photoPaths"
+          :src="resolveSrc(part.photoPaths)"
+          max-height="260"
           cover
-      ></v-img>
+      />
 
-      <v-card-title>
+      <hr />
+      <v-card-title class="ml-5 mt-2">
         {{ part.name }}
       </v-card-title>
-      <v-card-subtitle class="text-md-body-1">
-        Marca: {{ part.brand }}
-      </v-card-subtitle>
-      <p class="part-year ml-4">Year: {{ part.year }}</p>
-      <p class="part-price  ml-4 mb-n3">Price: <span>{{ part.price }}</span></p>
+      <v-card-text>
+        <v-card-subtitle class="text-md-body-1">
+          Marca: {{ part.brand }}
+        </v-card-subtitle>
+        <p class="part-year ml-4">Year: {{ part.year }}</p>
+        <p class="part-price  ml-4 mb-n3">Price: <span>{{ part.price }}</span></p>
+      </v-card-text>
 
     </v-card>
   </div>

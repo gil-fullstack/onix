@@ -54,15 +54,15 @@ function toggleMobileMenu() {
 <!--                      </svg>-->
             <v-icon color="white">mdi-account</v-icon>
           </button>
-          <button v-if="(!isMobile && logged) || (!isMobile && logged2)" :key="count" class="search-btn"
-                  aria-label="Search" @click="logout">
-                      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
-                           viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="7"/>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                      </svg>
-            LOGOUT
-          </button>
+<!--          <button v-if="(!isMobile && logged) || (!isMobile && logged2)" :key="count" class="search-btn"-->
+<!--                  aria-label="Search" @click="logout">-->
+<!--                      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"-->
+<!--                           viewBox="0 0 24 24">-->
+<!--                        <circle cx="11" cy="11" r="7"/>-->
+<!--                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>-->
+<!--                      </svg>-->
+<!--            LOGOUT-->
+<!--          </button>-->
           <button v-if="isMobile" class="menu-btn" aria-label="Menu" @click="toggleMobileMenu">
             <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"
                  viewBox="0 0 24 24">
