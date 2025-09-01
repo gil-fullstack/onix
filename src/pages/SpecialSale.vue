@@ -4,7 +4,8 @@ import {computed, ref, onMounted} from "vue";
 const display = useDisplay()
 const isMobile = computed(() => display.smAndDown.value)
 
-const carImageBaseUrl = "http://localhost:8082/photos/onix/"
+// const carImageBaseUrl = "http://localhost:8082/photos/onix/"
+const carImageBaseUrl = "https://api.jjautostore.com/photos/onix/"
 function resolveSrc(path) {
   // already a full URL → use as-is
   if (path.startsWith('http')) return path
@@ -14,10 +15,10 @@ function resolveSrc(path) {
 const parts = ref([])
 
 const getParts = () => {
-  fetch('http://localhost:8082/parts/all')
+  // fetch('http://localhost:8082/parts/all')
+  fetch('https://api.jjautostore.com/parts/all')
   .then(response => response.json())
   .then(data => {
-
     parts.value.push(...data)
     // parts.forEach(part => {
     //   part.photoPaths = carImageBaseUrl + part.photoPaths
@@ -53,12 +54,12 @@ onMounted(() => {
       <v-card-title class="ml-5 mt-2">
         {{ part.name }}
       </v-card-title>
-      <v-card-text>
+      <v-card-text class="mb-4">
         <v-card-subtitle class="text-md-body-1">
           Marca: {{ part.brand }}
         </v-card-subtitle>
-        <p class="part-year ml-4">Year: {{ part.year }}</p>
-        <p class="part-price  ml-4 mb-n3">Price: <span>{{ part.price }}</span></p>
+        <p class="part-year ml-4">Anos compatíveis: {{ part.years }}</p>
+        <p v-if="part.price" class="part-price  ml-4 mb-n3">Preço: <span>{{ part.price }}</span></p>
       </v-card-text>
 
     </v-card>

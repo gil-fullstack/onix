@@ -30,12 +30,14 @@ const headers = [
   {title: 'Fotos', key: 'uploads', align: 'center'},
 ]
 const getParts = async () => {
-  const response = await fetch('http://localhost:8082/parts/all')
+  // const response = await fetch('http://localhost:8082/parts/all')
+  const response = await fetch('https://api.jjautostore.com/parts/all')
   parts.value = await response.json()
 }
 const edit = (item) => {
   isEditing.value = true
   console.log(item, 'item')
+  IdEditing.value = item.id
   modalAddPart.value = true
   part.value = {
     "id": item.id,
@@ -69,14 +71,20 @@ const closeMessageModal = () => {
 }
 const remove = async (id) => {
   console.log(id, 'id')
-  const response = await fetch(`http://localhost:8082/parts/${id}`, {
+  // const response = await fetch(`http://localhost:8082/parts/${id}`, {
+  const response = await fetch(`https://api.jjautostore.com/parts/${id}`, {
     method: 'DELETE'
   })
   console.log(response)
   if (response.ok) {
     await getParts()
+    message.value = "Sua peça foi removida com sucesso!"
+    dialogMessage.value = true
+  } else{
+    message.value = "Ocorreu um erro durante a remoção da peça!"
+    console.log("Anything went wrong!")
+    dialogMessage.value = true
   }
-  await router.go()
 }
 const prepareOpenAddPart = () => {
   console.log("prepareOpenAddPart")
@@ -87,11 +95,11 @@ const modalAddPart = shallowRef(false)
 const dialogMessage = shallowRef(false)
 const message = shallowRef("")
 const isEditing = shallowRef(false)
+const IdEditing = shallowRef(0)
 
 const addPart = async () => {
   console.log(part.value, 'part.value')
   const myPart = {
-    "id": null,
     "name": part.value.name,
     "category": part.value.category,
     "brand": part.value.brand,
@@ -102,25 +110,48 @@ const addPart = async () => {
     "price": part.value.price,
     "photoPaths": part.value.photoPaths
   }
-  const response = await fetch('http://localhost:8082/parts/save', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(myPart)
-  })
-  console.log(response)
-  if (response.ok) {
-    console.log(response, " into if")
-    modalAddPart.value = false
-    // await router.go()
-    message.value = "Sua peça foi cadastrada com sucesso!"
-    dialogMessage.value = true
+  // const response = await fetch('http://localhost:8082/parts/save', {
+  if(!isEditing.value){
+    const response = await fetch('https://api.jjautostore.com/parts/save', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(myPart)
+    })
+    if (response.ok) {
+      console.log(response, " into if")
+      modalAddPart.value = false
+      // await router.go()
+      message.value = "Sua peça foi cadastrada com sucesso!"
+      dialogMessage.value = true
+    }
+  }else {
+    // const response = await fetch('http://localhost:8082/parts/update/' + IdEditing.value, {
+    const response = await fetch('https://api.jjautostore.com/parts/update/' + IdEditing.value, {
+    method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(myPart)
+    })
+    if (response.ok) {
+      console.log(response, " into else")
+      modalAddPart.value = false
+      // await router.go()
+      message.value = "Sua peça foi atualizada com sucesso!"
+      dialogMessage.value = true
+    } else{
+      modalAddPart.value = false
+      message.value = "Algo de errado na atualização"
+    }
   }
+
 }
 /* ────────────────────────────────────────────────
    Photo-upload modal state
 ──────────────────────────────────────────────────*/
+const responseDialog = shallowRef(false)
 const uploadDialog = shallowRef(false)  // open / close modal
 const uploadFile = ref(null)
 const uploading = ref(false)         // request in-flight
@@ -144,14 +175,25 @@ async function uploadOnePhoto(){
       uploadPartId.value
   )
   formData.append('file', uploadFile.value[0])
-  const response = await fetch(`http://localhost:8082/photos/upload/name/onix/` + uploadPartName.value + '/' + uploadPartId.value, {
+  // const response = await fetch(`http://localhost:8082/photos/upload/name/onix/` + uploadPartName.value + '/' + uploadPartId.value, {
+  const response = await fetch(`https://api.jjautostore.com/photos/upload/name/onix/` + uploadPartName.value + '/' + uploadPartId.value, {
     method: 'POST',
     body: formData
   })
   if (response.ok) {
     await getParts()
     uploadDialog.value = false
+    message.value = "Seu upload foi realizado com sucesso!"
+    dialogMessage.value = true
+  }else{
+    uploadDialog.value = false
+    message.value = "Ocorreu um erro ao realizar o upload! Tente novamente mais tarde.\n Se necessário avise o administrador do sistema"
+    dialogMessage.value = true
   }
+}
+const closeDialogMessage = () => {
+  dialogMessage.value = false
+  router.go()
 }
 onMounted(() => {
   getParts()
@@ -278,7 +320,7 @@ onMounted(() => {
         size="mySize3"
         btn="OK"
         style="z-index: 101"
-        @close-modal="dialogMessage = false"
+        @close-modal="closeDialogMessage"
         @btn-modal="closeMessageModal"
     >
       <v-card width="90%">
