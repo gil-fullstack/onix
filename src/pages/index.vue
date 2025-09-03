@@ -15,10 +15,10 @@ const isMobile = computed(() => display.smAndDown.value)
     </div>
     <div class="my_text">
       <h2 class="text-center">SUSPENSÃO - FREIO - FILTROS</h2>
-      <p>A <strong>Onix Automotive</strong> é seu melhor fornecedor de suspensão e freios e filtros, com preços
-        competitívos e excelência no atendimento. A Onix oferece ainda uma linha de peças variadas para para fixação e
+      <p>A <strong>Ônix Automotive</strong> é seu melhor fornecedor de suspensão e freios e filtros, com preços
+        competitívos e excelência no atendimento. A Ônix oferece ainda uma linha de peças variadas para para fixação e
         estabildade do carro.</p>
-      <p class="mt-2">A <strong>Onix Automotive</strong> ainda ajuda você a controlar o estoque, tem pessoal treinado
+      <p class="mt-2">A <strong>Ônix Automotive</strong> ainda ajuda você a controlar o estoque, tem pessoal treinado
         para te orientar
         com visitas presenciais com apoio técnico e aplicação dos produtos</p>
     </div>

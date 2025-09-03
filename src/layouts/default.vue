@@ -23,7 +23,7 @@ function toggleMobileMenu() {
         <router-link to="/" class="logo-link">
           <img
               :src="logo"
-              alt="Onix Logo"
+              alt="Ônix Logo"
               class="my-logo"
               style="max-width: 56%; height: auto"
           />

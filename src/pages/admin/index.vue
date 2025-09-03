@@ -211,7 +211,7 @@ onMounted(() => {
       >
         <template v-slot:top>
           <v-toolbar>
-            <v-toolbar-title>Peças Onix Automotive</v-toolbar-title>
+            <v-toolbar-title>Peças Ônix Automotive</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn
                 class="primary"
@@ -274,7 +274,7 @@ onMounted(() => {
           <!--                />-->
           <v-text-field
               v-model="part.auto_parts_code"
-              label="Código Onix"
+              label="Código Ônix"
               class="mt-n3"
               dense
               required
@@ -324,7 +324,7 @@ onMounted(() => {
         @btn-modal="closeMessageModal"
     >
       <v-card width="90%">
-        <v-card-title>Onix Automotive</v-card-title>
+        <v-card-title>Ônix Automotive</v-card-title>
         <v-card-text class="mt-2 mb-7">
           <h3>{{ message }}</h3>
         </v-card-text>
