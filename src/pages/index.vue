@@ -1,7 +1,9 @@
 <script setup>
 import {useDisplay} from 'vuetify'
 import {computed} from "vue";
-import mangueiras from './../assets/mangueiras.png'
+import revisao from './../assets/REVISAO.jpg'
+import supencao from './../assets/supencao.jpg'
+import freio from './../assets/FREIO.jpg'
 
 const display = useDisplay()
 const isMobile = computed(() => display.smAndDown.value)
@@ -10,11 +12,11 @@ const isMobile = computed(() => display.smAndDown.value)
 <template>
   <div class="my_main">
     <div class="banner">
-      <img v-if="!isMobile" src="../assets/banner2_site_1.jpg" width="100%" alt="banner ONIX">
+      <img v-if="!isMobile" src="../assets/banner_01.jpg" width="100%" alt="banner ONIX">
       <img v-else src="../assets/page.jpg" width="100%" alt="banner ONIX">
     </div>
     <div class="my_text">
-      <h2 class="text-center">SUSPENSÃO - FREIO - FILTROS</h2>
+      <h3 class="text-center">SUSPENSÃO - FREIO - ITENS de REVISÃO</h3>
       <p>A <strong>Ônix Automotive</strong> é seu melhor fornecedor de suspensão e freios e filtros, com preços
         competitívos e excelência no atendimento. A Ônix oferece ainda uma linha de peças variadas para para fixação e
         estabildade do carro.</p>
@@ -23,45 +25,42 @@ const isMobile = computed(() => display.smAndDown.value)
         com visitas presenciais com apoio técnico e aplicação dos produtos</p>
     </div>
     <div class="parts mb-7">
-      <a href="/suspencao.pdf" style="width: 20%; border: none;" target="_blank" rel="noopener">
+      <a href="/suspencao.pdf" class="mb-10" :class="isMobile ? 'mt-7': ''" :style="isMobile ? 'width: 77%; border: none;': 'width: 20%; border: none;'" target="_blank" rel="noopener">
         <v-card
             width="100%"
         >
           <v-img
-              max-height="240px"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_ppQSGokkeOJiUzprrHjYaKjCRY-v6h0_2NCsqWFQZV2cZbv9WY521K4&s"
+              :max-height="isMobile ? '': '240px'"
+              :src="supencao"
               cover
           ></v-img>
-          <v-card-title>Suspensão</v-card-title>
         </v-card>
       </a>
-      <a href="/pastilhas.jpeg" style="width: 20%; border: none;" target="_blank" rel="noopener">
+      <a href="/freios.pdf" class="mb-10" :class="isMobile ? 'mt-7': ''" :style="isMobile ? 'width: 77%; border: none;': 'width: 20%; border: none;'" target="_blank" rel="noopener">
         <v-card
             width="100%"
         >
           <v-img
-              max-height="240px"
-              src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRL_MI48-1bbeDqLnbuN8i5MhFxUObd9ZkuOfyfFfb09_dWjuDLdaQd1nVzegVP8MjO_Ru8tn2vCNDKVGoWITmnow1LSg3uV2rtnmcB4S9HCu0x9ul6cdI3BQ"
+              :max-height="isMobile ? '': '240px'"
+              :src="freio"
               cover
           ></v-img>
-          <v-card-title>Freios</v-card-title>
         </v-card>
       </a>
-      <a href="/mangueiras.jpg" style="width: 20%; border: none;" target="_blank" rel="noopener">
+      <a href="/diversos.pdf" class="mb-10" :class="isMobile ? 'mt-7': ''" :style="isMobile ? 'width: 77%; border: none;': 'width: 20%; border: none;'" target="_blank" rel="noopener">
         <v-card
             width="100%"
         >
           <v-img
-              max-height="240px"
-              :src="mangueiras"
+              :max-height="isMobile ? '': '240px'"
+              :src="revisao"
               cover
           ></v-img>
-          <v-card-title>Filtros</v-card-title>
         </v-card>
       </a>
     </div>
     <div class="highlight">
-      <img src="../assets/bigger_logo.png" width="50%" class="logo" alt="Vite logo"/>
+      <img src="../assets/LOGO_prata.svg" width="100%" class="logo" alt="Vite logo"/>
     </div>
   </div>
 </template>
@@ -83,7 +82,7 @@ const isMobile = computed(() => display.smAndDown.value)
     max-width: 100%;
     background-color: white;
     font-size: 1.2em;
-    padding: 4%;
+    padding: 2% 7%;
   }
 
   .parts {
@@ -96,7 +95,7 @@ const isMobile = computed(() => display.smAndDown.value)
   }
 
   .highlight {
-    padding: 1.4% 2.8%;
+    padding: 0.7% 2.8%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -124,10 +123,12 @@ const isMobile = computed(() => display.smAndDown.value)
     }
 
     .parts {
+      flex-direction: column;
       margin-top: 1%;
-      padding: 5% 2%;
+      padding: 2% 1%;
       max-width: 100%;
       min-width: 100%;
+      gap: 7%;
     }
 
     .highlight {

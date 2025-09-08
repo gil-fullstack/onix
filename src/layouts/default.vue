@@ -1,6 +1,6 @@
 <script setup>
 import {computed, ref} from 'vue'
-import logo from '@/assets/logo.png'
+import logo from '@/assets/LOGO_prata.svg'
 import {useRouter} from "vue-router";
 import {useDisplay} from 'vuetify'
 import App from "../App.vue";
@@ -25,7 +25,7 @@ function toggleMobileMenu() {
               :src="logo"
               alt="Ônix Logo"
               class="my-logo"
-              style="max-width: 56%; height: auto"
+              :style="isMobile ? 'max-width: 35%; height: auto': 'max-width: 15%; height: auto'"
           />
         </router-link>
         <ul class="nav-links" :class="{ 'is-open': isMobileMenuOpen }">
