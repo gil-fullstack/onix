@@ -5,6 +5,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import generatedRoutes  from 'virtual:generated-pages'   // or the path your plugin gives
 import { setupLayouts } from 'virtual:generated-layouts'
 import { createApp } from 'vue'
+import { vMaska } from 'maska'
 
 
 const router = createRouter({
@@ -23,5 +24,8 @@ import 'vuetify/styles'
 const app = createApp(App)
 
 registerPlugins(app)
+
+// Register maska directive
+app.directive('maska', vMaska)
 
 app.use(router).mount('#app')
