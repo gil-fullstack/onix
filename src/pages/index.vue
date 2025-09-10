@@ -132,11 +132,11 @@ const isMobile = computed(() => display.smAndDown.value)
     }
 
     .highlight {
-      padding: 3% 2.8%;
+      padding: 2% 2.8%;
       max-width: 100%;
-
       img {
-        width: 30%;
+        width: 50%;
+        margin-top: -7%;
       }
     }
   }

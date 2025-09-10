@@ -56,4 +56,16 @@
       font-size: 1.2rem;
     }
 }
+@media (max-width: 768px) {
+  .about_main{
+    .banner{
+      img{
+        margin-left: 0;
+      }
+    }
+    .my_text{
+      padding: 1% 4%;
+    }
+  }
+}
 </style>

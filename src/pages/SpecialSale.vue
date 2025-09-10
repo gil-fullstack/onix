@@ -34,9 +34,9 @@ onMounted(() => {
 
 <template>
 <div class="sale_main">
-  <h2 class="text-center">Peças com preços especiais na semana</h2>
+  <h2 class="text-center">Peças com <i style="font-style:oblique">destaque</i> na semana:</h2>
   <hr />
-  Abaixo as peças com desconto da semana:
+
   <main class="part-grid">
   <div v-for="(part, k) in parts" :key="part.id" class="part-card">
     <v-card
@@ -105,7 +105,8 @@ onMounted(() => {
   .sale_main{
     padding: 2% 1%;
     h2{
-      font-size: 1.1rem;
+      font-size: 1.3rem;
+      margin-bottom: 0.7rem;
     }
     .part-grid {
       padding: 0.4rem;

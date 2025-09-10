@@ -88,7 +88,7 @@ const resetForm = () => {
     <v-card class="my-card" :width="isMobile ? '96%':'80%'" elevation="7">
       <v-card-title>
         <h3 style="color: #DF5E19;">Fale conosco</h3>
-        <img src="../assets/logo_preto.png" width="22%" alt="log">
+        <img src="../assets/logo_preto.png" :width="isMobile ? '49%': '22%'" alt="log">
       </v-card-title>
 
       <p class="mb-2" style="word-wrap: break-word; overflow-wrap: break-word;"
