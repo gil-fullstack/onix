@@ -7,7 +7,6 @@ import { setupLayouts } from 'virtual:generated-layouts'
 import { createApp } from 'vue'
 import { vMaska } from 'maska'
 
-
 const router = createRouter({
     // history: createWebHistory(),
     history: createWebHashHistory

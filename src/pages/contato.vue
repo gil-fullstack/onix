@@ -84,7 +84,7 @@ const resetForm = () => {
 </script>
 
 <template>
-  <div class="geral_contact text-cente">
+  <div class="geral_contact">
     <v-card class="my-card" :width="isMobile ? '96%':'80%'" elevation="7">
       <v-card-title>
         <h3 style="color: #DF5E19;">Fale conosco</h3>
