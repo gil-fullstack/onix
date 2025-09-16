@@ -13,6 +13,7 @@ function resolveSrc(path) {
   return carImageBaseUrl + path
 }
 const parts = ref([])
+const offers = ref([])
 
 // Testimonials in Brazilian Portuguese
 const testimonials = [
@@ -36,27 +37,37 @@ const getParts = () => {
   .then(response => response.json())
   .then(data => {
     parts.value.push(...data)
-    // parts.forEach(part => {
-    //   part.photoPaths = carImageBaseUrl + part.photoPaths
-    // })
-    console.log(parts)
   })
   .catch(error => console.log(error))
 }
+const getOffers = () => {
+  fetch('http://localhost:8082/offers/last')
+  // fetch('https://api.jjautostore.com/offers/last')
+      .then(response => response.json())
+      .then(data => {
+        offers.value = data
+        // console.log(offers.value)
+      })
+      .catch(error => console.log(error))
+}
 onMounted(() => {
   getParts()
+  getOffers()
 })
 </script>
 
 <template>
 <div class="sale_main">
   <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="hero-content">
-      <h1 class="hero-title">PROMOÇÃO ESPECIAL</h1>
-      <h2 class="hero-subtitle">Peças Originais para seu Onix com Preços Imbatíveis!</h2>
-      <p class="hero-description">Aproveite nossas ofertas exclusivas e garanta as melhores peças para seu veículo com qualidade e garantia.</p>
+  <section  class="hero-section">
+    <div v-if="offers.title" class="hero-content">
+      <h1 v-if="offers" class="hero-title">{{ offers.title }}</h1>
+      <h2 v-if="offers" class="hero-subtitle mt-n4">{{ offers.subtitle }}</h2>
+      <p v-if="offers"  class="hero-description mt-n4">{{ offers.phrase }}</p>
       <a href="#produtos" class="cta-button">VER OFERTAS ESPECIAIS</a>
+    </div>
+    <div v-else class="hero2">
+      <h1>O Melhor da Ônix Automotive para você</h1>
     </div>
   </section>
 
@@ -80,9 +91,11 @@ onMounted(() => {
   </section>
 
   <!-- Products Section -->
-  <section id="produtos" class="products-section">
-    <h2 class="section-title">OFERTAS IMPERDÍVEIS DA SEMANA</h2>
-    <p class="section-subtitle">Peças selecionadas com os melhores preços para você!</p>
+  <section id="produtos" class="products-section mt-n8">
+    <h2 v-if="offers.title2" class="section-title">{{ offers.title2 }}</h2>
+    <h2 v-else class="section-title">OFERTAS IMPERDÍVEIS DA SEMANA</h2>
+    <p v-if="offers.phrase2" class="section-subtitle mt-n3">{{ offers.phrase2 }}</p>
+    <p v-else class="section-subtitle mt-n3">Peças selecionadas com os melhores preços para você!</p>
 
     <div v-if="parts.length === 0" class="empty-message">
       <p>Aguarde! Em breve as melhores promoções estarão disponíveis aqui!</p>

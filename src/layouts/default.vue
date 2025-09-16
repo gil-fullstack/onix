@@ -79,7 +79,7 @@ function toggleMobileMenu() {
 </template>
 
 <style lang="scss" scoped>
-$ferrari-red: #ff1010;
+$ferrari-red: #ff6410;
 $ferrari-yellow: #ffe600;
 $dark: #5a5a5a;
 $white: #fff;
@@ -239,6 +239,100 @@ body {
     height: 40px;
   }
 }
+@media (height: 1080px) {
+  .my-menu {
+    width: 100%;
+    background: $dark;
+    box-shadow: 0 2px 18px -8px rgba(0, 0, 0, 0.14);
+    position: relative;
+    z-index: 100;
 
+    .access-login {
+      position: absolute;
+      right: 4%;
+      top: 14%;
+      float: right;
+    }
+
+    .menu-container {
+      max-width: 1900px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 63px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+
+      .my-logo {
+        height: 48px;
+        width: auto;
+        margin-top: 2px;
+      }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.4rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li a {
+        text-decoration: none;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-weight: 600;
+        font-size: 1.2rem;
+        letter-spacing: 0.09em;
+        color: $white;
+        padding-bottom: 4px;
+        border-bottom: 2px solid transparent;
+        transition: color 0.18s, border-bottom 0.18s;
+
+        &:hover, &:focus {
+          color: $ferrari-red;
+          border-bottom: 2px solid $ferrari-red;
+        }
+      }
+    }
+
+    .menu-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+
+      .search-btn, .menu-btn {
+        background: none;
+        border: none;
+        color: $white;
+        padding: 7px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.18s;
+
+        &:hover {
+          background: rgba(255, 0, 0, 0.18);
+          color: $ferrari-red;
+        }
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .search-btn svg, .menu-btn svg {
+        display: block;
+      }
+    }
+
+    .menu-btn {
+      display: none; // Hide hamburger by default
+    }
+  }
+}
 
 </style>

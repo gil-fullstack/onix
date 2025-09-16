@@ -17,9 +17,9 @@ const isMobile = computed(() => display.smAndDown.value)
     </div>
     <div class="my_text">
       <h3 class="text-center">SUSPENSÃO - FREIO - ITENS de REVISÃO</h3>
-      <p>A <strong>Ônix Automotive</strong> é seu melhor fornecedor de suspensão e freios e filtros, com preços
+      <p>A <strong>Ônix Automotive</strong> é seu melhor fornecedor de suspensão e freios e itens de Revisão, com preços
         competitívos e excelência no atendimento. A Ônix oferece ainda uma linha de peças variadas para para fixação e
-        estabildade do carro.</p>
+        estabilidade do carro.</p>
       <p class="mt-2">A <strong>Ônix Automotive</strong> ainda ajuda você a controlar o estoque, tem pessoal treinado
         para te orientar
         com visitas presenciais com apoio técnico e aplicação dos produtos</p>
@@ -30,7 +30,6 @@ const isMobile = computed(() => display.smAndDown.value)
             width="100%"
         >
           <v-img
-              :max-height="isMobile ? '': '240px'"
               :src="supencao"
               cover
           ></v-img>
@@ -41,7 +40,6 @@ const isMobile = computed(() => display.smAndDown.value)
             width="100%"
         >
           <v-img
-              :max-height="isMobile ? '': '240px'"
               :src="freio"
               cover
           ></v-img>
@@ -52,7 +50,7 @@ const isMobile = computed(() => display.smAndDown.value)
             width="100%"
         >
           <v-img
-              :max-height="isMobile ? '': '240px'"
+
               :src="revisao"
               cover
           ></v-img>
@@ -86,6 +84,7 @@ const isMobile = computed(() => display.smAndDown.value)
   }
 
   .parts {
+    padding: 2% 5%;
     background-color: white;
     display: flex;
     align-items: center;
@@ -137,6 +136,15 @@ const isMobile = computed(() => display.smAndDown.value)
       img {
         width: 50%;
         margin-top: -7%;
+      }
+    }
+  }
+}
+@media (height: 1080px) {
+  .my_main {
+    .my_text {
+      h2 {
+        font-size: 0.8em;
       }
     }
   }
