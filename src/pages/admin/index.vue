@@ -3,6 +3,7 @@ import {computed, onMounted, ref, shallowRef} from "vue";
 import {useDisplay} from 'vuetify'
 import {useRouter} from "vue-router";
 import MyModal from "../../components/MyModal.vue";
+import SpecialOffers from "./SpecialOffers.vue";
 
 const display = useDisplay()
 const router = useRouter()
@@ -195,6 +196,8 @@ const closeDialogMessage = () => {
   dialogMessage.value = false
   router.go()
 }
+
+
 onMounted(() => {
   getParts()
 })
@@ -203,7 +206,7 @@ onMounted(() => {
 
 <template>
   <div class="admin_main">
-    <v-card width="98%" class="pt-1 pl-2 pr-2 text-center">
+    <v-card width="98%" class="pt-1 pl-2 pr-2 text-center mb-4">
       <v-data-table
           :headers="headers"
           :hide-default-footer="parts.length < 11"
@@ -364,6 +367,9 @@ onMounted(() => {
         />
       </div>
     </MyModal>
+
+    <!-- Special Offers Component -->
+    <special-offers></special-offers>
   </div>
 </template>
 
