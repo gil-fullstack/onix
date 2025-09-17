@@ -1,6 +1,6 @@
 <script setup>
 import { ref, shallowRef } from "vue";
-import MyModal from "../../components/MyModal.vue";
+import MyModal from "../components/MyModal.vue";
 
 // Special Offers form data
 const specialOffer = ref({
@@ -34,8 +34,8 @@ const headers = [
 // Fetch all offers
 const getOffers = async () => {
   try {
-    // const response = await fetch('https://api.jjautostore.com/offers/all');
-    const response = await fetch('http://localhost:8082/offers/all');
+    // const response = await fetch('http://localhost:8082/offers/all');
+    const response = await fetch('https://api.jjautostore.com/offers/all');
     if (response.ok) {
       offers.value = await response.json();
     } else {

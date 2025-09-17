@@ -24,6 +24,9 @@ const isMobile = computed(() => display.smAndDown.value)
         para te orientar
         com visitas presenciais com apoio técnico e aplicação dos produtos</p>
     </div>
+    <div class="info_links">
+      <h4 class="text-center">Click na imagem abaixo para abrir/baixar os catálogos:</h4>
+    </div>
     <div class="parts mb-7">
       <a href="/suspencao.pdf" class="mb-10" :class="isMobile ? 'mt-7': ''" :style="isMobile ? 'width: 77%; border: none;': 'width: 20%; border: none;'" target="_blank" rel="noopener">
         <v-card
@@ -56,6 +59,10 @@ const isMobile = computed(() => display.smAndDown.value)
           ></v-img>
         </v-card>
       </a>
+    </div>
+    <div class="info_links">
+      <h4 class="text-center">Click no botão abaixo, faça seu cadastro e tenha informações especiais</h4>
+      <v-btn variant="flat" color="secondary" class="mb-4" to="ClienteRegister">Cadastro</v-btn>
     </div>
     <div class="highlight">
       <img src="../assets/LOGO_prata.svg" width="100%" class="logo" alt="Vite logo"/>
@@ -92,7 +99,18 @@ const isMobile = computed(() => display.smAndDown.value)
     max-width: 100%;
     min-width: 100%;
   }
-
+  .info_links{
+    background: linear-gradient(360deg, rgba(251, 169, 73, 0.81), white);
+    width: 100%;
+    padding-top: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h4{
+      margin-bottom: 1.4%;
+    }
+  }
   .highlight {
     padding: 0.7% 2.8%;
     display: flex;
@@ -131,6 +149,7 @@ const isMobile = computed(() => display.smAndDown.value)
     }
 
     .highlight {
+      margin-top: 5.5%;
       padding: 2% 2.8%;
       max-width: 100%;
       img {

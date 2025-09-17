@@ -41,8 +41,8 @@ const getParts = () => {
   .catch(error => console.log(error))
 }
 const getOffers = () => {
-  fetch('http://localhost:8082/offers/last')
-  // fetch('https://api.jjautostore.com/offers/last')
+  // fetch('http://localhost:8082/offers/last')
+  fetch('https://api.jjautostore.com/offers/last')
       .then(response => response.json())
       .then(data => {
         offers.value = data
