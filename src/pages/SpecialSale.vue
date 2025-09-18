@@ -125,7 +125,13 @@ onMounted(() => {
             </p>
           </v-card-text>
           <v-card-actions>
-            <v-btn color="primary" variant="elevated" block class="buy-button">
+            <v-btn
+                color="primary"
+                variant="elevated"
+                href="https://wa.me/5535984326202"
+                class="buy-button"
+                prepend-icon="mdi-whatsapp"
+            >
               COMPRAR AGORA
             </v-btn>
           </v-card-actions>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, shallowRef } from "vue";
-import MyModal from "../components/MyModal.vue";
+import MyModal from "../../components/MyModal.vue";
 
 // Special Offers form data
 const specialOffer = ref({
@@ -95,8 +95,8 @@ const submitSpecialOffer = async () => {
   };
 
   try {
-    // const response = await fetch('https://api.jjautostore.com/offers', {
-    const response = await fetch('http://localhost:8082/offers', {
+    const response = await fetch('https://api.jjautostore.com/offers', {
+    // const response = await fetch('http://localhost:8082/offers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

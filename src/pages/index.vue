@@ -62,7 +62,7 @@ const isMobile = computed(() => display.smAndDown.value)
     </div>
     <div class="info_links">
       <h4 class="text-center">Click no botão abaixo, faça seu cadastro e tenha informações especiais</h4>
-      <v-btn variant="flat" color="secondary" class="mb-4" to="ClienteRegister">Cadastro</v-btn>
+      <v-btn variant="flat" color="secondary" class="mb-4" to="/ClienteRegister">Cadastro</v-btn>
     </div>
     <div class="highlight">
       <img src="../assets/LOGO_prata.svg" width="100%" class="logo" alt="Vite logo"/>

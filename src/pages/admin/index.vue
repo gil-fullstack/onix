@@ -2,7 +2,7 @@
 import {computed, onMounted, ref, shallowRef} from "vue";
 import {useDisplay} from 'vuetify'
 import {useRouter} from "vue-router";
-import MyModal from "../components/MyModal.vue";
+import MyModal from "../../components/MyModal.vue";
 import SpecialOffers from "./SpecialOffers.vue";
 
 const display = useDisplay()

@@ -29,7 +29,7 @@ const nameRules = [
 ];
 const cnpjRules = [
   v => !!v || 'CNPJ é obrigatório',
-  v => /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/.test(v) || 'CNPJ deve estar no formato XX.XXX.XXX/XXXX-XX'
+  v => /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/.test(v) || 'CNPJ deve estar no formato XX.XXX.XXX/XXXX-XX'
 ];
 const emailRules = [
   v => !!v || 'E-mail é obrigatório',
@@ -43,7 +43,8 @@ const message = ref("");
 // Register a new client
 const registerCliente = async () => {
   try {
-    const response = await fetch('http://localhost:8082/clientes', {
+    // const response = await fetch('http://localhost:8082/clientes/save', {
+    const response = await fetch('https://api.jjautostore.com/clientes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -123,16 +124,16 @@ const states = [
             </v-col>
             
             <v-col cols="12" :md="6">
-              <v-text-field
+              <v-mask-input
                 v-model="cliente.cnpj"
                 label="CNPJ"
                 placeholder="XX.XXX.XXX/XXXX-XX"
-                :rules="cnpjRules"
+                mask="##.###.###/####-##"
                 required
                 prepend-inner-icon="mdi-identifier"
                 variant="outlined"
                 density="comfortable"
-              ></v-text-field>
+              ></v-mask-input>
             </v-col>
           </v-row>
           
@@ -162,14 +163,15 @@ const states = [
           
           <v-row dense>
             <v-col cols="12" :md="6">
-              <v-text-field
+              <v-mask-input
                 v-model="cliente.cellphone"
                 label="Celular"
                 placeholder="(XX) XXXXX-XXXX"
+                mask="(##) #####-####"
                 prepend-inner-icon="mdi-cellphone"
                 variant="outlined"
                 density="comfortable"
-              ></v-text-field>
+              ></v-mask-input>
             </v-col>
             
             <v-col cols="12" :md="6">
