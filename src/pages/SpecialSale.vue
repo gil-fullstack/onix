@@ -1,17 +1,20 @@
 <script setup>
-import { useDisplay } from 'vuetify'
+import {useDisplay} from 'vuetify'
 import {computed, ref, onMounted} from "vue";
+
 const display = useDisplay()
 const isMobile = computed(() => display.smAndDown.value)
 
 // const carImageBaseUrl = "http://localhost:8082/photos/onix/"
 const carImageBaseUrl = "https://api.jjautostore.com/photos/onix/"
+
 function resolveSrc(path) {
   // already a full URL → use as-is
   if (path.startsWith('http')) return path
   // only a file name or relative path → prepend base URL
   return carImageBaseUrl + path
 }
+
 const parts = ref([])
 const offers = ref([])
 
@@ -34,11 +37,11 @@ const testimonials = [
 const getParts = () => {
   // fetch('http://localhost:8082/parts/all')
   fetch('https://api.jjautostore.com/parts/all')
-  .then(response => response.json())
-  .then(data => {
-    parts.value.push(...data)
-  })
-  .catch(error => console.log(error))
+      .then(response => response.json())
+      .then(data => {
+        parts.value.push(...data)
+      })
+      .catch(error => console.log(error))
 }
 const getOffers = () => {
   // fetch('http://localhost:8082/offers/last')
@@ -57,108 +60,114 @@ onMounted(() => {
 </script>
 
 <template>
-<div class="sale_main">
-  <!-- Hero Section -->
-  <section  class="hero-section">
-    <div v-if="offers.title" class="hero-content">
-      <h1 v-if="offers" class="hero-title">{{ offers.title }}</h1>
-      <h2 v-if="offers" class="hero-subtitle mt-n4">{{ offers.subtitle }}</h2>
-      <p v-if="offers"  class="hero-description mt-n4">{{ offers.phrase }}</p>
-      <a href="#produtos" class="cta-button">VER OFERTAS ESPECIAIS</a>
-    </div>
-    <div v-else class="hero2">
-      <h1>O Melhor da Ônix Automotive para você</h1>
-    </div>
-  </section>
-
-  <!-- Benefits Section -->
-  <section class="benefits-section">
-    <div class="benefit-item">
-      <v-icon size="x-large" color="primary">mdi-truck-delivery</v-icon>
-      <h3>Entrega Rápida</h3>
-      <p>Receba suas peças em tempo recorde</p>
-    </div>
-    <div class="benefit-item">
-      <v-icon size="x-large" color="primary">mdi-shield-check</v-icon>
-      <h3>Garantia de Qualidade</h3>
-      <p>Todas as peças com garantia</p>
-    </div>
-    <div class="benefit-item">
-      <v-icon size="x-large" color="primary">mdi-cash-multiple</v-icon>
-      <h3>Melhor Preço</h3>
-      <p>Economia garantida em suas compras</p>
-    </div>
-  </section>
-
-  <!-- Products Section -->
-  <section id="produtos" class="products-section mt-n8">
-    <h2 v-if="offers.title2" class="section-title">{{ offers.title2 }}</h2>
-    <h2 v-else class="section-title">OFERTAS IMPERDÍVEIS DA SEMANA</h2>
-    <p v-if="offers.phrase2" class="section-subtitle mt-n3">{{ offers.phrase2 }}</p>
-    <p v-else class="section-subtitle mt-n3">Peças selecionadas com os melhores preços para você!</p>
-
-    <div v-if="parts.length === 0" class="empty-message">
-      <p>Aguarde! Em breve as melhores promoções estarão disponíveis aqui!</p>
-    </div>
-
-    <div v-else class="part-grid">
-      <div v-for="(part, k) in parts" :key="part.id" class="part-card">
-        <v-card class="mx-auto product-card" max-width="344">
-          <div class="product-badge">OFERTA</div>
-          <v-img
-              v-if="part.photoPaths"
-              :src="resolveSrc(part.photoPaths)"
-              max-height="260"
-              cover
-              class="product-image"
-          />
-
-          <v-card-title class="product-title">
-            {{ part.name }}
-          </v-card-title>
-          <v-card-text class="product-details">
-            <p class="product-brand">Marca: <strong>{{ part.brand }}</strong></p>
-            <p class="product-year">Anos compatíveis: <strong>{{ part.years }}</strong></p>
-            <p v-if="part.price" class="product-price">
-              <span class="price-label">Por apenas:</span>
-              <span class="price-value">R$ {{ part.price }}</span>
-            </p>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn
-                color="primary"
-                variant="elevated"
-                href="https://wa.me/5535984326202"
-                class="buy-button"
-                prepend-icon="mdi-whatsapp"
-            >
-              COMPRAR AGORA
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+  <div class="sale_main">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div v-if="offers.title" class="hero-content">
+        <h1 v-if="offers" class="hero-title">{{ offers.title }}</h1>
+        <h2 v-if="offers" class="hero-subtitle mt-n4">{{ offers.subtitle }}</h2>
+        <p v-if="offers" class="hero-description mt-n4">{{ offers.phrase }}</p>
+        <a href="#produtos" class="cta-button">VER OFERTAS ESPECIAIS</a>
       </div>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
-  <section class="testimonials-section">
-    <h2 class="section-title">O QUE NOSSOS CLIENTES DIZEM</h2>
-    <div class="testimonials-container">
-      <div v-for="(testimonial, index) in testimonials" :key="index" class="testimonial-card">
-        <v-icon size="large" color="primary" class="quote-icon">mdi-format-quote-close</v-icon>
-        <p class="testimonial-text">{{ testimonial.text }}</p>
-        <p class="testimonial-author">- {{ testimonial.author }}</p>
+      <div v-else class="hero2">
+        <h1>O Melhor da Ônix Automotive para você</h1>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Call to Action Section -->
-  <section class="cta-section">
-    <h2>NÃO PERCA TEMPO!</h2>
-    <p>Aproveite agora mesmo nossas ofertas exclusivas para o seu Onix.</p>
-    <a href="#produtos" class="cta-button">VER TODAS AS OFERTAS</a>
-  </section>
-</div>
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+      <div class="benefit-item">
+        <v-icon size="x-large" color="primary">mdi-truck-delivery</v-icon>
+        <h3>Entrega Rápida</h3>
+        <p>Receba suas peças em tempo recorde</p>
+      </div>
+      <div class="benefit-item">
+        <v-icon size="x-large" color="primary">mdi-shield-check</v-icon>
+        <h3>Garantia de Qualidade</h3>
+        <p>Todas as peças com garantia</p>
+      </div>
+      <div class="benefit-item">
+        <v-icon size="x-large" color="primary">mdi-cash-multiple</v-icon>
+        <h3>Melhor Preço</h3>
+        <p>Economia garantida em suas compras</p>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="produtos" class="products-section mt-n8">
+      <h2 v-if="offers.title2" class="section-title">{{ offers.title2 }}</h2>
+      <h2 v-else class="section-title">OFERTAS IMPERDÍVEIS DA SEMANA</h2>
+      <p v-if="offers.phrase2" class="section-subtitle mt-n3">{{ offers.phrase2 }}</p>
+      <p v-else class="section-subtitle mt-n3">Peças selecionadas com os melhores preços para você!</p>
+
+      <div v-if="parts.length === 0" class="empty-message">
+        <p>Aguarde! Em breve as melhores promoções estarão disponíveis aqui!</p>
+      </div>
+
+      <div v-else class="part-grid">
+        <div v-for="(part, k) in parts" :key="part.id" class="part-card">
+          <v-card class="mx-auto product-card" max-width="344">
+            <div class="product-badge">OFERTA</div>
+            <v-img
+                v-if="part.photoPaths"
+                :src="resolveSrc(part.photoPaths)"
+                max-height="260"
+                cover
+                class="product-image"
+            />
+
+            <v-card-title class="product-title">
+              {{ part.name }}
+            </v-card-title>
+            <v-card-text class="product-details">
+              <p class="product-brand">Marca: <strong>{{ part.brand }}</strong></p>
+              <p class="product-year">Anos compatíveis: <strong>{{ part.years }}</strong></p>
+              <p v-if="part.price" class="product-price">
+                <span class="price-label">Por apenas:</span>
+                <span class="price-value">R$ {{ part.price }}</span>
+              </p>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn
+                  color="primary"
+                  variant="elevated"
+                  href="https://wa.me/5535984326202"
+                  class="buy-button"
+                  prepend-icon="mdi-whatsapp"
+              >
+                COMPRAR AGORA
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+      <h2 class="section-title">O QUE NOSSOS CLIENTES DIZEM</h2>
+      <div class="testimonials-container">
+        <div v-for="(testimonial, index) in testimonials" :key="index" class="testimonial-card">
+          <v-icon size="large" color="primary" class="quote-icon">mdi-format-quote-close</v-icon>
+          <p class="testimonial-text">{{ testimonial.text }}</p>
+          <p class="testimonial-author">- {{ testimonial.author }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+      <h2>NÃO PERCA TEMPO!</h2>
+      <p>Aproveite agora mesmo nossas ofertas exclusivas para o seu Onix.</p>
+      <!--    <a href="#produtos" class="cta-button">Cadastre-se para ter melhores OFERTAS</a>-->
+      <router-link to="/ClienteRegister" class="cta-button">Cadastre-se para ter melhores OFERTAS</router-link>
+    </section>
+    <div class="whatsapp">
+      <a href="https://wa.me/5535984326202" target="_blank" class="mt-1" rel="noopener noreferrer">
+        <img src="../assets/social/whatsapp.svg" alt="WhatsApp" width="42" height="50"></img>
+      </a>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -172,6 +181,24 @@ onMounted(() => {
   align-items: center;
   background: linear-gradient(180deg, $primaryColor 0%, rgba(255, 102, 0, 0.8) 10%, rgba(255, 102, 0, 0.4) 30%, rgba(255, 255, 255, 0.9) 70%, #ffffff 100%);
   color: #333;
+
+  .whatsapp {
+    position: fixed;
+    bottom: 14px;
+    right: 14px;
+    z-index: 1000;
+    img {
+      animation: whatsapp-blink 1.5s infinite;
+    }
+  }
+  @keyframes whatsapp-blink {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
 
   /* Hero Section */
   .hero-section {
@@ -224,6 +251,7 @@ onMounted(() => {
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
       }
     }
+
   }
 
   /* Benefits Section */

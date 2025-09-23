@@ -52,7 +52,23 @@ function toggleMobileMenu() {
 <!--                        <circle cx="11" cy="11" r="7"/>-->
 <!--                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>-->
 <!--                      </svg>-->
-            <v-icon color="white">mdi-account</v-icon>
+
+<!--              <v-icon color="white" to="/ClienteRegister">-->
+<!--                mdi-account-->
+<!--                <v-tooltip-->
+<!--                    activator="parent"-->
+<!--                    location="bottom"-->
+<!--                >Cadastre-se</v-tooltip>-->
+<!--              </v-icon>-->
+            <v-btn variant="text" color="white" to="/ClienteRegister">
+              <v-icon size="x-large">mdi-account</v-icon>
+              <v-tooltip
+                  activator="parent"
+                  location="bottom"
+              >Cadastre-se</v-tooltip>
+            </v-btn>
+
+
           </button>
 <!--          <button v-if="(!isMobile && logged) || (!isMobile && logged2)" :key="count" class="search-btn"-->
 <!--                  aria-label="Search" @click="logout">-->

@@ -170,17 +170,45 @@ const resetForm = () => {
         </v-btn>
       </template>
     </v-snackbar>
+
+    <div class="whatsappBase mt-7">
+      <h3>Ou fale conosco pelo WhatsApp:</h3>
+      <div class="whatsapp">
+        <a href="https://wa.me/5535984326202" target="_blank" class="mt-1" rel="noopener noreferrer">
+          <img src="../assets/social/whatsapp.svg" alt="WhatsApp" width="28" height="50"></img>
+        </a>
+        <span>(35) 984326202</span>
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .geral_contact{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 3% 14% 7% 14%;
   .my-card {
     padding: 2% 7% 4% 7%;
+  }
+  .whatsappBase{
+    h3{
+      color: #DF5E19;
+    }
+    .whatsapp{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      span{
+        color: #676767;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
   }
 }
 @media (max-width: 600px) {
