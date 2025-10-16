@@ -166,6 +166,11 @@ const isMobile = computed(() => display.smAndDown.value)
         font-size: 0.8em;
       }
     }
+    .info_links{
+      h4{
+        font-size: 1.6rem;
+      }
+    }
   }
 }
 </style>

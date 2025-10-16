@@ -68,4 +68,19 @@
     }
   }
 }
+@media (height: 1080px) {
+  .about_main{
+    min-width: 100%;
+    .banner{
+      display: flex;
+      justify-content: center;
+      img{
+        margin-left: 0;
+      }
+    }
+    .my_text{
+      padding: 1% 4%;
+    }
+  }
+}
 </style>

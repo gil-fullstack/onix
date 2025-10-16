@@ -47,7 +47,7 @@ const sendEmail = async () => {
   loading.value = true;
 
   const sendEmail = {
-    emailTo: 'gilservicosweb@gmail.com',
+    emailTo: 'fabiobruno.sp@gmail.com',
     subject: 'Email enviado pelo site ONIX Automotive',
     text: `${name.value} com email: ${fone.value} enviou essa mensagem: \n\n ${message.value}` ,
   }
